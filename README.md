@@ -1,5 +1,6 @@
 # Segmentador de EDUs
-
+![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
+![NLP](https://img.shields.io/badge/NLP-SpaCy-green)
 ## Descrição
 
 Este projeto implementa um segmentador de texto em Unidades Discursivas Elementares (EDUs) baseado em regras linguísticas para o português brasileiro. Utiliza a biblioteca spaCy para tokenização e análise morfológica, permitindo a divisão de textos em unidades discursivas menores para análise de discurso.

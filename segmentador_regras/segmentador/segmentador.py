@@ -4,33 +4,93 @@ class segmentador_de_edus:
     def __init__(self):
         print("Iniciando o processo de segmentação...")
 
-    def checar_segmentar(tokenized_sentence):
-        for token in tokenized_sentence:
-            if token[2] == 'SEGMENTO':
-                return True
-        return False
-    
+
     def regra_1(text_local):
+        ''' segmentação por ponto final, regra 1'''
         for token in text_local.copy():
-            if token == '.':
+            if token == '.' or token == '!' or token == '?':
                 text_local[text_local.index(token)] += "|"
         edus = text_local.split("|")
         return edus
     
-    def regra_2_3(tokenized_text):
+    def regra_9_3(tokenized_text):
+        '''informações parenteticas, separadas por caracteres especiais, regra 9
+        e regra 3, citações explicitas'''
         tokenized_segmented = []
         for sentence in tokenized_text:
             sentence_segmented = []
             for token in sentence:
-                if token[3] == "punct" and not token[0] != ".":
-                    sentence_segmented.append(token)
-                    sentence_segmented.append(['|','|', 'SEGMENTO', 'SEG', 'false'])
+                if token[3] == "punct" and not token[0] != "." and not token[0] != "!" and not token[0] != "?" and not token[0] != ",":
+                    if token[0] == ")" or token[0] == "}" or token[0] == "]" or token[0] == '"' or token[0] == "'":
+                        sentence_segmented.append(token)
+                        tokenized_segmented.append(sentence_segmented)
+                        sentence_segmented = []
+                        sentence_segmented.append(token)
+                    else:
+                        tokenized_segmented.append(sentence_segmented)
+                        sentence_segmented = []
+                        sentence_segmented.append(token)
                 else:
                     sentence_segmented.append(token)
             tokenized_segmented.append(sentence_segmented)
         return tokenized_segmented
     
+    def regra_2(tokenized_text, marcadores_fortes):
+        ''' segmentação por marcadores fortes'''
+        tokenized_segmented = []
+        for sentence in tokenized_text:
+            sentence_segmented = []
+            for token in sentence:
+                if token[0] in marcadores_fortes:
+                    tokenized_segmented.append(sentence_segmented)
+                    sentence_segmented = []
+                    sentence_segmented.append(token)
+                else:
+                    sentence_segmented.append(token)
+            tokenized_segmented.append(sentence_segmented)
+        return tokenized_segmented
+    
+    def regra_7(tokenized_text):
+        '''segmentação por orações relativas(todas)'''
+        return tokenized_text
 
+    def regra_5(tokenized_text):
+        '''segmentação por verbo implicito'''
+        tokenized_segmented = []
+        for sentence in tokenized_text:
+            sentence_segmented = []
+            for token in sentence:
+                if token[0] == "e" and token[5] == "VERB" or "AUX":
+                    if sentence_segmented:
+                        tokenized_segmented.append(sentence_segmented)
+                        sentence_segmented = []
+                        sentence_segmented.append(token)
+                else:
+                    sentence_segmented.append(token)
+            tokenized_segmented.append(sentence_segmented)
+        return tokenized_segmented
+    
+    def regra_6(tokenized_text):
+        '''segmentadando orações reduzidas'''
+        tokenized_segmented = []
+        for sentence in tokenized_text:
+            sentence_segmented = []
+            last_token_virgula = False
+            for token in sentence:
+                last_token_virgula = True if token[0] == "," else False
+                if token[2] == "VERB" or "AUX" and last_token_virgula == True:
+                    if sentence_segmented:
+                        tokenized_segmented.append(sentence_segmented)
+                        sentence_segmented = []
+                        sentence_segmented.append(token)
+                        
+                else:
+                    sentence_segmented.append(token)
+            tokenized_segmented.append(sentence_segmented)
+        return tokenized_segmented
+    def regra_8(tokenized_text):
+        ''' segmentação por verbos publicos ou de atribuição de fala'''
+        return tokenized_text
 if __name__ == "__main__":
     segmentador_de_edus()
-    print(segmentador_de_edus.regra_2_3([[['O', 'o', 'DET', 'det', 'false'], ['rato', 'rato', 'NOUN', 'nsubj', 'false'], ['roeu', 'roer', 'VERB', 'ROOT', 'false'], ['a', 'a', 'DET', 'det', 'false'], ['roupa', 'roupa', 'NOUN', 'obj', 'false'], ['do', 'de o', 'ADP DET', 'case det', 'false'], ['rei', 'rei', 'NOUN', 'nmod:poss', 'false'], ['de', 'de', 'ADP', 'case', 'false'], ['Roma.', 'Roma.', 'PROPN', 'nmod:npmod', 'false']]]))
+    print(segmentador_de_edus.regra_9_3([[['O', 'o', 'DET', 'det', 'false'], ['rato', 'rato', 'NOUN', 'nsubj', 'false'], ['roeu', 'roer', 'VERB', 'ROOT', 'false'], ['a', 'a', 'DET', 'det', 'false'], ['roupa', 'roupa', 'NOUN', 'obj', 'false'], ['do', 'de o', 'ADP DET', 'case det', 'false'], ['rei', 'rei', 'NOUN', 'nmod:poss', 'false'], ['de', 'de', 'ADP', 'case', 'false'], ['Roma.', 'Roma.', 'PROPN', 'nmod:npmod', 'false']]]))

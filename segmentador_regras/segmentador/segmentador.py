@@ -70,7 +70,7 @@ class segmentador_de_edus:
         for sentence in tokenized_text:
             sentence_segmented = []
             for token in sentence:
-                if token[0] == "e" and token[4] == "VERB" or "AUX":
+                if token[0] == "e" and token[4] in ["VERB", "AUX"]:
                         tokenized_segmented.append(sentence_segmented)
                         sentence_segmented = []
                         sentence_segmented.append(token)

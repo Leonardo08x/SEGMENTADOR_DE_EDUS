@@ -4,7 +4,8 @@ from segmentador.segmentador import segmentador_de_edus
 
 if __name__ == "__main__":
     segmentador_de_edus()
-    regra_1 = segmentador_de_edus.regra_1(utils.remove_tokens_singles(utils.tokenizer_spacy(utils.return_text_from_file(r"/home/mrsylky/Documentos/IC/CSTNews 6.0/C10_Mundo_BombardeioLibano/Textos-fonte/D3_C10_OGlobo.txt"))))
+    #regra_1 = segmentador_de_edus.regra_1(utils.remove_tokens_singles(utils.tokenizer_spacy(utils.return_text_from_file(r"/home/mrsylky/Documentos/IC/CSTNews 6.0/C10_Mundo_BombardeioLibano/Textos-fonte/D3_C10_OGlobo.txt"))))
+    regra_1 = segmentador_de_edus.regra_1(utils.remove_tokens_singles(utils.tokenizer_spacy("o rato roeo o queijo de rafael. A aranha arranha a jararaca. O rei ia para a ilha. Gabriel escreveu o relatório. Onde está o carro?" )))
     print(regra_1)
     print("Regra 1 concluída")
     regra_9_3 = segmentador_de_edus.regra_9_3(regra_1)

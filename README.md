@@ -65,7 +65,7 @@ O projeto implementa as seguintes regras de segmentação, aplicadas em sequênc
 | **Regra 9.3** | Informações parentéticas separadas por caracteres especiais e citações explícitas | ✅ Implementada |
 | **Regra 2** | Segmentação por marcadores fortes (oposição, conclusão, temporalidade, condicionais, causalidade) | ✅ Implementada |
 | **Regra 7** | Segmentação por orações relativas (todas) | ❌ Não implementada (placeholder) |
-| **Regra 5** | Segmentação por verbo implícito (conjunção "e" seguida de verbo) | ✅ Implementada |
+| **Regra 5** | Segmentação por verbo implícito (conjunção "e" seguida de verbo) |  ❌ Implementada parcialmente |
 | **Regra 6** | Segmentação por orações reduzidas (verbo após vírgula) | ✅ Implementada |
 | **Regra 8** | Segmentação por verbos públicos ou de atribuição de fala | ❌ Não implementada (placeholder) |
 
